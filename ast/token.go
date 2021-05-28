@@ -1,4 +1,4 @@
-package main
+package ast
 
 import "fmt"
 
@@ -61,13 +61,32 @@ const (
 	EOF
 )
 
-type Token struct {
-	typ TokenType
-	lexeme string
-	literal string // object?
-	line int
+var keywords = map[string]TokenType{
+	"and":    AND,
+	"class":  CLASS,
+	"else":   ELSE,
+	"false":  FALSE,
+	"fun":    FUN,
+	"for":    FOR,
+	"if":     IF,
+	"nil":    NIL,
+	"or":     OR,
+	"print":  PRINT,
+	"return": RETURN,
+	"super":  SUPER,
+	"this":   THIS,
+	"true":   TRUE,
+	"var":    VAR,
+	"while":  WHILE,
 }
 
-func (t *Token) toString(){	
-	fmt.Println("%v %v %v", t.typ, t.lexeme, t.literal)
+type Token struct {
+	Typ TokenType
+	Lexeme string
+	Literal string
+	Line int
+}
+
+func (t *Token) ToString() string {	
+	return fmt.Sprintf("%v %v %v %d", t.Typ, t.Lexeme, t.Literal, t.Line)
 }

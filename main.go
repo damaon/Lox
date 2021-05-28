@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"dt.com/lox/ast"
 )
 
 func main(){
@@ -42,21 +44,15 @@ func runPrompt(){
 }
 
 func run(source string){
-    tokens := scanTokens(source);
-
+    tokens, err := ast.Scan(source);
+	check(err)
     // For now, just print the tokens.
-    for token := range tokens {
-      fmt.Println(token);
-    }
+	for _, t := range tokens {
+		fmt.Println(t.ToString())
+	}
 }
 
-func scanTokens(source string) []string{
-	// TODO: move to scanner modules
-	tokens := []string{"a", "b", "c", "d"}
-	return tokens;
-}
-
-func error(line int, message string){
+func reportError(line int, message string){
 	report(line, "", message)
 }
 
